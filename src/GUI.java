@@ -14,30 +14,29 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.awt.*;
 import javax.swing.border.Border;
 
-public class GUI implements ActionListener{
+public class GUI extends JFrame implements ActionListener{
 
     JButton button;
 
     public GUI() {
 
-        JFrame frame = new JFrame();
         JPanel panel = new JPanel();
-        JButton button = new JButton("Upload file");
+        button = new JButton("Choose File");
         button.addActionListener(this);
 
+        panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 5, 10));
+        this.setLayout(new GridLayout(0, 1));
+        this.add(button);
 
-        panel.setBorder(BorderFactory.createEmptyBorder(30, 30, 10, 10));
-        panel.setLayout(new GridLayout(0, 1));
-        panel.add(button);
-
-        frame.add(panel, BorderLayout.CENTER);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setTitle("Travelling Salesman");
-        frame.pack();
-        frame.setVisible(true);
+        this.add(panel, BorderLayout.CENTER);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setTitle("Travelling Salesman");
+        this.pack();
+        this.setVisible(true);
 
     }
     @Override
@@ -47,13 +46,18 @@ public class GUI implements ActionListener{
 
             JFileChooser fileUploader = new JFileChooser();
             fileUploader.setVisible(true);
-            fileUploader.showOpenDialog(null);
+            int selectedFile = fileUploader.showOpenDialog(null);
+
+            if(selectedFile == JFileChooser.APPROVE_OPTION) {
+                File file = new File(fileUploader.getSelectedFile().getAbsolutePath());
+                System.out.println(file);
+            }
         }
     }
 
     public static void main(String[] args) {
 
         new GUI();
+        
     }
-    
 }

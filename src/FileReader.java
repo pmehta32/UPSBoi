@@ -1,6 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class FileReader {
@@ -36,13 +37,13 @@ public class FileReader {
                 line = line.trim().replaceAll(" +", " ");
                 String arr[] = line.split(" ");
 
-                if(arr[0].equals("DIMENSION:")) {
-                    numCities = Integer.valueOf(arr[1]);
+                if(arr[0].startsWith("DIMENSION")) {
+                    numCities = Integer.valueOf(arr[arr.length-1]);
                 }
                 if(!arr[0].matches("[A-Z].*")) {
                     for(String s: arr) {
                         if(s.length()>0) {
-                            int num = Integer.valueOf(s);
+                            Float num = Float.valueOf(s);
                             row.add(num);
                             if(row.size() == numCities) {
                                 graph.add(row);
@@ -52,23 +53,41 @@ public class FileReader {
                     }
                 }
             }
+            System.out.println(graph.size());
             System.out.println(graph);
             return graph;
     }
 
     public static ArrayList parseSymFile(Scanner scanner) {
+        //int numCities = 0;
+        ArrayList coordinates = new ArrayList();
+        ArrayList row;
         while (scanner.hasNextLine()) {
             String line = scanner.nextLine();
-            System.out.println(line);
+            line = line.trim().replaceAll(" +", " ");
+            String arr[] = line.split(" ");
+            //if(arr[0].startsWith("DIMENSION")) {
+             //   numCities = Integer.valueOf(arr[arr.length-1]);
+           // }
+            row = new ArrayList();
+            if(!arr[0].matches("[A-Z].*")) {
+                //row.add(Integer.valueOf(arr[0]));
+                row.add(Float.valueOf(arr[1]));
+                row.add(Float.valueOf(arr[2]));
+                coordinates.add(row);
+            }
         }
-        return null;
+        System.out.println(coordinates.size());
+        System.out.println(coordinates);
+        return coordinates;
     }
 
     public static void main(String args[]) {
         //FileReader f = new FileReader();
-        String path = "assets/wi29.tsp";
+        String path1 = "assets/wi29.tsp";
+        String path2 = "assets/br17.atsp";
         //System.out.println(System.getProperty("user.dir"));
         //System.out.println(isSymmetric(path));
-        loadFile("assets/br17.atsp");
+        loadFile(path1);
     }
 }

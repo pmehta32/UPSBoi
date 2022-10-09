@@ -21,6 +21,7 @@ import javax.swing.border.Border;
 public class GUI extends JFrame implements ActionListener{
 
     JButton button;
+    private Graph graph;
 
     public GUI() {
 
@@ -49,8 +50,10 @@ public class GUI extends JFrame implements ActionListener{
             int selectedFile = fileUploader.showOpenDialog(null);
 
             if(selectedFile == JFileChooser.APPROVE_OPTION) {
-                File file = new File(fileUploader.getSelectedFile().getAbsolutePath());
-                System.out.println(file);
+                //File file = new File(fileUploader.getSelectedFile().getAbsolutePath());
+                //System.out.println(file);
+                this.graph = FileReader.loadFile(fileUploader.getSelectedFile().getAbsolutePath());
+                //this.graph.printEdges();
             }
         }
     }

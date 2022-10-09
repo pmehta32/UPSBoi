@@ -16,4 +16,8 @@ public class Graph {
         return edges.get(source).get(destination);
     }
 
+    public void printEdges() {
+        System.out.println(this.edges);
+    }
+
 }

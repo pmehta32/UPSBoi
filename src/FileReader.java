@@ -11,8 +11,8 @@ public class FileReader {
         return filepath.endsWith(".tsp");
     }
 
-    public static void loadFile(String filepath) {
-        ArrayList graph;
+    public static Graph loadFile(String filepath) {
+        Graph graph;
         try {
             File f = new File(filepath);
             Scanner sc = new Scanner(f);
@@ -21,15 +21,16 @@ public class FileReader {
             } else
                 graph = parseAsymFile(sc);
             sc.close();
+            return graph;
         } catch (Exception e) {
             System.out.println("Could not read file");
         }
-
+        return null;
     }
 
-    public static ArrayList parseAsymFile(Scanner scanner) {
+    public static Graph parseAsymFile(Scanner scanner) {
             int numCities = 0;
-            ArrayList graph = new ArrayList();
+            ArrayList edges = new ArrayList();
             ArrayList row = new ArrayList();
 
             while (scanner.hasNextLine()) {
@@ -46,19 +47,21 @@ public class FileReader {
                             Float num = Float.valueOf(s);
                             row.add(num);
                             if(row.size() == numCities) {
-                                graph.add(row);
+                                edges.add(row);
                                 row = new ArrayList();
                             }
                         }
                     }
                 }
             }
-            System.out.println(graph.size());
-            System.out.println(graph);
+            //System.out.println(edges.size());
+            //System.out.println(edges);
+            Graph graph = new Graph(edges.size());
+            graph.setEdges(edges);
             return graph;
     }
 
-    public static ArrayList parseSymFile(Scanner scanner) {
+    public static Graph parseSymFile(Scanner scanner) {
         //int numCities = 0;
         ArrayList coordinates = new ArrayList();
         ArrayList row;
@@ -77,9 +80,10 @@ public class FileReader {
                 coordinates.add(row);
             }
         }
-        System.out.println(coordinates.size());
-        System.out.println(coordinates);
-        return coordinates;
+        //System.out.println(coordinates.size());
+        //System.out.println(coordinates);
+        Graph graph = new SymGraph(coordinates.size(), coordinates);
+        return graph;
     }
 
     public static void main(String args[]) {
@@ -88,6 +92,7 @@ public class FileReader {
         String path2 = "assets/br17.atsp";
         //System.out.println(System.getProperty("user.dir"));
         //System.out.println(isSymmetric(path));
-        loadFile(path1);
+        Graph g = loadFile(path1);
+        g.printEdges();
     }
 }

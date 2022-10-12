@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 public class Graph {
-    private ArrayList<ArrayList<Integer>> edges;
+    private ArrayList<ArrayList<Float>> edges;
     private int numVertices;
 
     public Graph(int numVertices) {
@@ -12,7 +12,7 @@ public class Graph {
         this.edges = edges;
     }
 
-    public int getDistance(int source, int destination) {
+    public float getDistance(int source, int destination) {
         return edges.get(source).get(destination);
     }
 

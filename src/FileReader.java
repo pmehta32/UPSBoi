@@ -85,14 +85,14 @@ public class FileReader {
         Graph graph = new SymGraph(coordinates.size(), coordinates);
         return graph;
     }
-
-    // public static void main(String args[]) {
-    //     //FileReader f = new FileReader();
+    
+    public static void main(String args[]) {
+    //     FileReader f = new FileReader();
     //     String path1 = "assets/wi29.tsp";
     //     String path2 = "assets/br17.atsp";
-    //     //System.out.println(System.getProperty("user.dir"));
-    //     //System.out.println(isSymmetric(path));
+    //     System.out.println(System.getProperty("user.dir"));
+        // System.out.println(isSymmetric(path));
     //     Graph g = loadFile(path1);
     //     g.printEdges();
-    // }
+    }
 }

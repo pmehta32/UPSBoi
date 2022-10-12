@@ -87,9 +87,9 @@ public class GUI extends JFrame implements ActionListener{
             int selectedFile = fileUploader.showOpenDialog(null);
 
             if(selectedFile == JFileChooser.APPROVE_OPTION) {
-                File file = new File(fileUploader.getSelectedFile().getAbsolutePath());                
+                // File file = new File(fileUploader.getSelectedFile().getAbsolutePath());                
                 this.graph = FileReader.loadFile(fileUploader.getSelectedFile().getAbsolutePath());
-                System.out.println(file);
+                // System.out.println(file);
                 this.graph.printEdges();
             }
         }

@@ -37,18 +37,18 @@ public class GUI extends JFrame implements ActionListener{
         button.addActionListener(this);
         JLabel label1 = new JLabel("Total Distance = 69 Miles");
         JLabel label2 = new JLabel("Route: Kabul -> Lahore -> Karachi");
-        JLabel label3 = new JLabel();
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setTitle("Travelling Salesman");
-        this.setSize(500,500);
+        this.setSize(10000,10000);
 
         // panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 5, 10));
-        this.setLayout(new GridLayout(0, 2));
-        this.add(button);
-        this.add(label1);
-        this.add(label2);
+        // this.setLayout(new GridLayout(0, 2));
+        this.setLayout(new BorderLayout());
+        this.add(button, BorderLayout.NORTH);
+        this.add(label1, BorderLayout.EAST);
+        this.add(label2, BorderLayout.WEST);
 
         JPanel panel2 = new JPanel(){
             @Override
@@ -70,7 +70,7 @@ public class GUI extends JFrame implements ActionListener{
                 }
             }
         };
-        this.add(panel2);
+        this.add(panel2, BorderLayout.CENTER);
 
         this.pack();
         this.setVisible(true);

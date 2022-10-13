@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 public class PathDisplay extends JTextArea {
 
-    int maxSize = 20;
+    int maxSize = 30;
 
     public PathDisplay(String s) {
         super(s);

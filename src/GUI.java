@@ -130,7 +130,7 @@ public class GUI extends JFrame implements ActionListener{
         JPanel panel2 = new JPanel();
         panel2.setSize(350, 350);
         panel2.setLocation(400, 370);
-//        panel2.setBackground(Color.black);
+        panel2.setBackground(Color.black);
         panel2.setBorder(BorderFactory.createLineBorder(Color.black));
         container.add(panel2);
 

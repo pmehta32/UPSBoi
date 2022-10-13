@@ -27,13 +27,12 @@ import java.util.Random;
 
 public class GUI extends JFrame implements ActionListener{
 
-    JButton button;
+    JButton chooseFileButton;
     JLabel fileName;
     JLabel calculatedDistance;
-    PathDisplay textArea;
+    PathDisplay travellingPath;
     MapPlot mapPanel;
     private Graph graph;
-//    private String filepath = "No file selected";
     private String distance;
     private String route;
 
@@ -42,11 +41,10 @@ public class GUI extends JFrame implements ActionListener{
     }
 
     public void loadGUI() {
-//        this.removeAll();
-        setTitle("TSP");
+        setTitle("Travelling Salesman Problem");
         setBounds(300, 90, 900, 800   );
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setResizable(false);
+        setResizable(true);
 
         Container container = getContentPane();
         container.setLayout(null);
@@ -57,15 +55,12 @@ public class GUI extends JFrame implements ActionListener{
         title.setLocation(300, 30);
         container.add(title);
 
-        JPanel panel = new JPanel();
+        chooseFileButton = new JButton("Choose File");
+        chooseFileButton.setSize(150, 20);
+        chooseFileButton.setLocation(100, 70);
+        chooseFileButton.addActionListener(this);
+        container.add(chooseFileButton);
 
-        button = new JButton("Choose File");
-        button.setSize(150, 20);
-        button.setLocation(100, 70);
-        button.addActionListener(this);
-        container.add(button);
-
-//        System.out.println(filepath);
         fileName = new JLabel("No file selected");
         fileName.setFont(new Font("Arial", Font.PLAIN, 20));
         fileName.setSize(200, 20);
@@ -90,15 +85,15 @@ public class GUI extends JFrame implements ActionListener{
         route.setLocation(100, 150);
         container.add(route);
 
-        textArea = new PathDisplay ("Path yet not calculated");
-        textArea.setFont(new Font("Arial", Font.PLAIN, 20));
-        textArea.setSize(200, 20);
-        textArea.setLocation(400, 150);
-        JScrollPane scroll = new JScrollPane (textArea,
+        travellingPath = new PathDisplay ("Path yet not calculated");
+        travellingPath.setFont(new Font("Arial", Font.PLAIN, 20));
+        travellingPath.setSize(200, 20);
+        travellingPath.setLocation(400, 150);
+        JScrollPane travellingPathScroll = new JScrollPane (travellingPath,
                 JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        scroll.setLocation(400, 150);
-        scroll.setSize(400, 200);
-        container.add(scroll);
+        travellingPathScroll.setLocation(400, 150);
+        travellingPathScroll.setSize(400, 200);
+        container.add(travellingPathScroll);
 
 
 //        JPanel panel2 = new JPanel(){
@@ -131,7 +126,7 @@ public class GUI extends JFrame implements ActionListener{
         mapPanel = new MapPlot();
         mapPanel.setSize(350, 350);
         mapPanel.setLocation(400, 370);
-        //mapPanel.setBackground(Color.black);
+        mapPanel.setBackground(Color.black);
         mapPanel.setBorder(BorderFactory.createLineBorder(Color.black));
         container.add(mapPanel);
 
@@ -139,8 +134,8 @@ public class GUI extends JFrame implements ActionListener{
 
 //        this.add(panel2, BorderLayout.CENTER);
 
-////        button = new JButton("Choose File");
-////        button.addActionListener(this);
+////        chooseFileButton = new JButton("Choose File");
+////        chooseFileButton.addActionListener(this);
 ////        JLabel label1 = new JLabel("Total Distance = 69 Miles");
 ////        JLabel label2 = new JLabel("Route: Kabul -> Lahore -> Karachi");
 ////
@@ -152,7 +147,7 @@ public class GUI extends JFrame implements ActionListener{
 ////        // panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 5, 10));
 ////        // this.setLayout(new GridLayout(0, 2));
 ////        this.setLayout(new BorderLayout());
-////        this.add(button, BorderLayout.NORTH);
+////        this.add(chooseFileButton, BorderLayout.NORTH);
 ////        this.add(label1, BorderLayout.EAST);
 ////        this.add(label2, BorderLayout.WEST);
 ////
@@ -184,13 +179,12 @@ public class GUI extends JFrame implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == button) {
+        if(e.getSource() == chooseFileButton) {
             JFileChooser fileUploader = new JFileChooser();
             fileUploader.setVisible(true);
             int selectedFile = fileUploader.showOpenDialog(null);
 
             if(selectedFile == JFileChooser.APPROVE_OPTION) {
-                // File file = new File(fileUploader.getSelectedFile().getAbsolutePath());
                 this.graph = FileReader.loadFile(fileUploader.getSelectedFile().getAbsolutePath());
                 //System.out.println(this.graph.getEdges());
                 String filepath = fileUploader.getSelectedFile().getName();
@@ -198,8 +192,8 @@ public class GUI extends JFrame implements ActionListener{
                 PathFinder pf = new PathFinder(this.graph);
                 ArrayList citiesPathDist =  pf.findPath();
                 calculatedDistance.setText(citiesPathDist.get(1).toString());
-                //textArea.setText(citiesPathDist.get(0).toString());
-                textArea.showPath((ArrayList)citiesPathDist.get(0));
+                //travellingPath.setText(citiesPathDist.get(0).toString());
+                travellingPath.showPath((ArrayList)citiesPathDist.get(0));
                 if(graph.isSymmetric()) {
                     // System.out.println(graph.getCoordinates());
                     mapPanel.setCoordinates((ArrayList) graph.getCoordinates());

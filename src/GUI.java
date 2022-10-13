@@ -131,7 +131,7 @@ public class GUI extends JFrame implements ActionListener{
         mapPanel = new MapPlot();
         mapPanel.setSize(350, 350);
         mapPanel.setLocation(400, 370);
-//        panel2.setBackground(Color.black);
+        //mapPanel.setBackground(Color.black);
         mapPanel.setBorder(BorderFactory.createLineBorder(Color.black));
         container.add(mapPanel);
 

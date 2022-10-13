@@ -22,10 +22,14 @@ public class MapPlot extends JPanel {
         // 0,0 -> 0,340
         // x,0 -> x,340
         // 0,y -> 0, 340-y
-        ArrayList pt = new ArrayList();
-        pt.add(getWidth()*scaler.scaleValue((float)point.get(0)));
-        pt.add(getHeight()*(1-scaler.scaleValue((float)point.get(1))));
-        return pt;
+        //pt.add(getWidth()*scaler.scaleValue((float)point.get(0)));
+        //pt.add(getHeight()*(1-scaler.scaleValue((float)point.get(1))));
+        ArrayList scaledPoint = scaler.scaleValue(point);
+        ArrayList transformedPoint = new ArrayList();
+        transformedPoint.add( (getWidth()-10) * (float)scaledPoint.get(0) );
+        transformedPoint.add( (getHeight()-10) * (1 - (float)scaledPoint.get(1)) );
+        return transformedPoint;
+
     }
 
     @Override

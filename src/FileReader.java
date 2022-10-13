@@ -4,13 +4,30 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
+/**
+* FileReader is the public class which takes the file from the user and reads it.
+* <p>
+* Button will allow user to upload the file with loaction points
+*/
 public class FileReader {
 
-
+/** 
+* Checks whether the uploaded file is symmetric or not
+*
+* @param filepath string that specifies the path of the uploaded file
+* @return displays the path of the file with an extension of tsp
+* @since 
+*/
     public static boolean isSymmetric(String filepath) {
         return filepath.endsWith(".tsp");
     }
-
+/**
+* Loads file in the system 
+* 
+* @param filepath string that shows the file path uploaded by the user
+* @return displays the graph if the function can read otherwise null
+* @exception 
+*/
     public static Graph loadFile(String filepath) {
         Graph graph;
         try {
@@ -27,7 +44,12 @@ public class FileReader {
         }
         return null;
     }
-
+/**
+* parses the asymmetric file upladed by the user which has a Graph datatype
+* 
+* @param scanner scans the uploaded file with a datatype Scanner
+* @return displays the graph of the uploaded file which has asymmetric loaction points
+*/
     public static Graph parseAsymFile(Scanner scanner) {
             int numCities = 0;
             ArrayList edges = new ArrayList();
@@ -60,7 +82,12 @@ public class FileReader {
             graph.setEdges(edges);
             return graph;
     }
-
+/**
+* parses the symmetric file upladed by the user which has a Graph datatype
+* 
+* @param scanner scans the uploaded file with a datatype Scanner
+* @return displays the graph of the uploaded file which has symmetric loaction points
+*/
     public static Graph parseSymFile(Scanner scanner) {
         //int numCities = 0;
         ArrayList coordinates = new ArrayList();
@@ -85,6 +112,11 @@ public class FileReader {
         Graph graph = new SymGraph(coordinates.size(), coordinates);
         return graph;
     }
+/**
+* calls every method created in this java file for the application
+* 
+* @param args 
+*/
     
     public static void main(String args[]) {
     //     FileReader f = new FileReader();

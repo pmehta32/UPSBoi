@@ -24,4 +24,11 @@ public class Graph {
         return this.numVertices;
     }
 
+    public boolean isSymmetric() {
+        return false;
+    }
+
+    public Object getCoordinates() {
+        return null;
+    }
 }

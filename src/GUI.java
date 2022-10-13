@@ -31,6 +31,7 @@ public class GUI extends JFrame implements ActionListener{
     JLabel fileName;
     JLabel calculatedDistance;
     PathDisplay textArea;
+    MapPlot mapPanel;
     private Graph graph;
 //    private String filepath = "No file selected";
     private String distance;
@@ -127,12 +128,12 @@ public class GUI extends JFrame implements ActionListener{
         map.setLocation(100, 370);
         container.add(map);
 
-        JPanel panel2 = new JPanel();
-        panel2.setSize(350, 350);
-        panel2.setLocation(400, 370);
+        mapPanel = new MapPlot();
+        mapPanel.setSize(350, 350);
+        mapPanel.setLocation(400, 370);
 //        panel2.setBackground(Color.black);
-        panel2.setBorder(BorderFactory.createLineBorder(Color.black));
-        container.add(panel2);
+        mapPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+        container.add(mapPanel);
 
 
 
@@ -199,6 +200,11 @@ public class GUI extends JFrame implements ActionListener{
                 calculatedDistance.setText(citiesPathDist.get(1).toString());
                 //textArea.setText(citiesPathDist.get(0).toString());
                 textArea.showPath((ArrayList)citiesPathDist.get(0));
+                if(graph.isSymmetric()) {
+                    // System.out.println(graph.getCoordinates());
+                    mapPanel.setCoordinates((ArrayList) graph.getCoordinates());
+                    mapPanel.repaint();
+                }
             }
 
 //            this.repaint();

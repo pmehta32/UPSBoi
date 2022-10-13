@@ -20,8 +20,14 @@ public class SymGraph extends Graph {
         this.setEdges(edges);
     }
 
+    @Override
     public ArrayList getCoordinates() {
         return this.coordinates;
+    }
+
+    @Override
+    public boolean isSymmetric() {
+        return true;
     }
 
 

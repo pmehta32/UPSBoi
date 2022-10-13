@@ -53,7 +53,7 @@ public class MapPlot extends JPanel {
         } else {
             for(int i=0; i<coordinates.size(); i++) {
                 ArrayList newPoint = transformPoint((ArrayList)coordinates.get(i)); //(ArrayList) coordinates.get(i);
-                System.out.println(newPoint);
+                //System.out.println(newPoint);
                 g2.drawOval(Math.round((float)newPoint.get(0)), Math.round((float)newPoint.get(1)), 5, 5);
             }
         }

@@ -86,6 +86,7 @@ public class GUI extends JFrame implements ActionListener{
         container.add(route);
 
         travellingPath = new PathDisplay ("Path yet not calculated");
+        travellingPath.setEnabled(false);
         travellingPath.setFont(new Font("Arial", Font.PLAIN, 20));
         travellingPath.setSize(200, 20);
         travellingPath.setLocation(400, 150);
@@ -185,6 +186,7 @@ public class GUI extends JFrame implements ActionListener{
             int selectedFile = fileUploader.showOpenDialog(null);
 
             if(selectedFile == JFileChooser.APPROVE_OPTION) {
+                this.graph = null;
                 this.graph = FileReader.loadFile(fileUploader.getSelectedFile().getAbsolutePath());
                 //System.out.println(this.graph.getEdges());
                 String filepath = fileUploader.getSelectedFile().getName();

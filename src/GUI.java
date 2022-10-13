@@ -28,77 +28,154 @@ public class GUI extends JFrame implements ActionListener{
 
     JButton button;
     private Graph graph;
+    private String filepath = "No file selected";
+    private String distance;
+    private String route;
 
-    public GUI() {
+    public GUI(){
+        loadGUI();
+    }
+
+    public void loadGUI() {
+//        this.removeAll();
+        setTitle("TSP");
+        setBounds(300, 90, 900, 800   );
+        //setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setResizable(false);
+
+        Container container = getContentPane();
+        container.setLayout(null);
+
+        JLabel title = new JLabel("TSP");
+        title.setFont(new Font("Arial", Font.PLAIN, 40));
+        title.setSize(300, 40);
+        title.setLocation(300, 30);
+        container.add(title);
 
         JPanel panel = new JPanel();
 
         button = new JButton("Choose File");
+        button.setSize(150, 20);
+        button.setLocation(100, 100);
         button.addActionListener(this);
-        JLabel label1 = new JLabel("Total Distance = 69 Miles");
-        JLabel label2 = new JLabel("Route: Kabul -> Lahore -> Karachi");
+        container.add(button);
 
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setLocationRelativeTo(null);
-        this.setTitle("Travelling Salesman");
-        this.setSize(10000,10000);
+        JLabel fileName = new JLabel(filepath);
+        fileName.setFont(new Font("Arial", Font.PLAIN, 20));
+        fileName.setSize(200, 20);
+        fileName.setLocation(400, 100);
+        container.add(fileName);
 
-        // panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 5, 10));
-        // this.setLayout(new GridLayout(0, 2));
-        this.setLayout(new BorderLayout());
-        this.add(button, BorderLayout.NORTH);
-        this.add(label1, BorderLayout.EAST);
-        this.add(label2, BorderLayout.WEST);
+        JLabel totalDistance = new JLabel("Total Distance:");
+        totalDistance.setFont(new Font("Arial", Font.PLAIN, 20));
+        totalDistance.setSize(200, 20);
+        totalDistance.setLocation(100, 200);
+        container.add(totalDistance);
 
-        JPanel panel2 = new JPanel(){
-            @Override
-            public void paint(Graphics g) {
-            
-                Graphics2D g2 = (Graphics2D) g;
-        
-                g2.setPaint(Color.red);
-                int w = getWidth();
-                int h = getHeight();
-        
-                Random r = new Random();
-        
-                for (int i = 0; i < 2000; i++) {
-        
-                    int x = Math.abs(r.nextInt()) % w;
-                    int y = Math.abs(r.nextInt()) % h;
-                    g2.drawLine(x, y, x, y);
-                }
-            }
-        };
-        this.add(panel2, BorderLayout.CENTER);
+        JLabel route = new JLabel("Route:");
+        route.setFont(new Font("Arial", Font.PLAIN, 20));
+        route.setSize(200, 20);
+        route.setLocation(100, 300);
+        container.add(route);
 
-        this.pack();
+//        JPanel panel2 = new JPanel(){
+////            @Override
+////            public void paint(Graphics g) {
+////
+////                Graphics2D g2 = (Graphics2D) g;
+////
+////                g2.setPaint(Color.blue);
+////                int w = getWidth();
+////                int h = getHeight();
+////
+////                Random r = new Random();
+////
+////                for (int i = 0; i < 2000; i++) {
+////
+////                    int x = Math.abs(r.nextInt()) % w;
+////                    int y = Math.abs(r.nextInt()) % h;
+////                    g2.drawLine(x, y, x, y);
+////                }
+////            }
+//        };
+
+        JPanel panel2 = new JPanel();
+        panel2.setSize(350, 350);
+        panel2.setLocation(100, 400);
+//        panel2.setBackground(Color.black);
+        panel2.setBorder(BorderFactory.createLineBorder(Color.black));
+        container.add(panel2);
+
+
+
+//        this.add(panel2, BorderLayout.CENTER);
+
+////        button = new JButton("Choose File");
+////        button.addActionListener(this);
+////        JLabel label1 = new JLabel("Total Distance = 69 Miles");
+////        JLabel label2 = new JLabel("Route: Kabul -> Lahore -> Karachi");
+////
+////        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+////        this.setLocationRelativeTo(null);
+////        this.setTitle("Travelling Salesman");
+////        this.setSize(10000,10000);
+////
+////        // panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 5, 10));
+////        // this.setLayout(new GridLayout(0, 2));
+////        this.setLayout(new BorderLayout());
+////        this.add(button, BorderLayout.NORTH);
+////        this.add(label1, BorderLayout.EAST);
+////        this.add(label2, BorderLayout.WEST);
+////
+////        JPanel panel2 = new JPanel(){
+////            @Override
+////            public void paint(Graphics g) {
+////
+////                Graphics2D g2 = (Graphics2D) g;
+////
+////                g2.setPaint(Color.red);
+////                int w = getWidth();
+////                int h = getHeight();
+////
+////                Random r = new Random();
+////
+////                for (int i = 0; i < 2000; i++) {
+////
+////                    int x = Math.abs(r.nextInt()) % w;
+////                    int y = Math.abs(r.nextInt()) % h;
+////                    g2.drawLine(x, y, x, y);
+////                }
+////            }
+////        };
+////        this.add(panel2, BorderLayout.CENTER);
+//
+//        this.pack();
         this.setVisible(true);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
-        
         if(e.getSource() == button) {
-
             JFileChooser fileUploader = new JFileChooser();
             fileUploader.setVisible(true);
             int selectedFile = fileUploader.showOpenDialog(null);
 
             if(selectedFile == JFileChooser.APPROVE_OPTION) {
-                // File file = new File(fileUploader.getSelectedFile().getAbsolutePath());                
+                // File file = new File(fileUploader.getSelectedFile().getAbsolutePath());
                 this.graph = FileReader.loadFile(fileUploader.getSelectedFile().getAbsolutePath());
                 //System.out.println(this.graph.getEdges());
+                filepath = fileUploader.getSelectedFile().getName();
                 PathFinder pf = new PathFinder(this.graph);
                 pf.findPath();
             }
+
+            loadGUI();
         }
     }
 
     public static void main(String[] args) {
 
         new GUI();
-        
+
     }
 }

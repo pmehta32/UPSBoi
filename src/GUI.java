@@ -21,14 +21,18 @@ import java.nio.file.Paths;
 import java.awt.*;
 import java.awt.geom.*;
 import javax.swing.border.Border;
+import java.util.ArrayList;
 import java.util.Random;
 
 
 public class GUI extends JFrame implements ActionListener{
 
     JButton button;
+    JLabel fileName;
+    JLabel calculatedDistance;
+    JTextArea textArea;
     private Graph graph;
-    private String filepath = "No file selected";
+//    private String filepath = "No file selected";
     private String distance;
     private String route;
 
@@ -60,7 +64,8 @@ public class GUI extends JFrame implements ActionListener{
         button.addActionListener(this);
         container.add(button);
 
-        JLabel fileName = new JLabel(filepath);
+//        System.out.println(filepath);
+        fileName = new JLabel("No file selected");
         fileName.setFont(new Font("Arial", Font.PLAIN, 20));
         fileName.setSize(200, 20);
         fileName.setLocation(400, 100);
@@ -72,11 +77,29 @@ public class GUI extends JFrame implements ActionListener{
         totalDistance.setLocation(100, 200);
         container.add(totalDistance);
 
+        calculatedDistance = new JLabel("Not yet calculated");
+        calculatedDistance.setFont(new Font("Arial", Font.PLAIN, 20));
+        calculatedDistance.setSize(200, 20);
+        calculatedDistance.setLocation(400, 200);
+        container.add(calculatedDistance);
+
         JLabel route = new JLabel("Route:");
         route.setFont(new Font("Arial", Font.PLAIN, 20));
         route.setSize(200, 20);
         route.setLocation(100, 300);
         container.add(route);
+
+        textArea = new JTextArea ("Path yet not calculated");
+        textArea.setFont(new Font("Arial", Font.PLAIN, 20));
+        textArea.setSize(200, 20);
+        textArea.setLocation(400, 300);
+        JScrollPane scroll = new JScrollPane (textArea,
+                JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scroll.setLocation(400, 300);
+        scroll.setSize(400, 50);
+        container.add(scroll);
+//        frame.add(scroll);
+//        frame.setVisible (true);
 
 //        JPanel panel2 = new JPanel(){
 ////            @Override
@@ -164,12 +187,16 @@ public class GUI extends JFrame implements ActionListener{
                 // File file = new File(fileUploader.getSelectedFile().getAbsolutePath());
                 this.graph = FileReader.loadFile(fileUploader.getSelectedFile().getAbsolutePath());
                 //System.out.println(this.graph.getEdges());
-                filepath = fileUploader.getSelectedFile().getName();
+                String filepath = fileUploader.getSelectedFile().getName();
+                fileName.setText(filepath);
                 PathFinder pf = new PathFinder(this.graph);
-                pf.findPath();
+                ArrayList citiesPathDist =  pf.findPath();
+                calculatedDistance.setText(citiesPathDist.get(1).toString());
+                textArea.setText(citiesPathDist.get(0).toString());
             }
 
-            loadGUI();
+//            this.repaint();
+//            loadGUI();
         }
     }
 

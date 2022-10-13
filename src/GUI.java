@@ -30,7 +30,7 @@ public class GUI extends JFrame implements ActionListener{
     JButton button;
     JLabel fileName;
     JLabel calculatedDistance;
-    JTextArea textArea;
+    PathDisplay textArea;
     private Graph graph;
 //    private String filepath = "No file selected";
     private String distance;
@@ -89,7 +89,7 @@ public class GUI extends JFrame implements ActionListener{
         route.setLocation(100, 300);
         container.add(route);
 
-        textArea = new JTextArea ("Path yet not calculated");
+        textArea = new PathDisplay ("Path yet not calculated");
         textArea.setFont(new Font("Arial", Font.PLAIN, 20));
         textArea.setSize(200, 20);
         textArea.setLocation(400, 300);
@@ -192,7 +192,8 @@ public class GUI extends JFrame implements ActionListener{
                 PathFinder pf = new PathFinder(this.graph);
                 ArrayList citiesPathDist =  pf.findPath();
                 calculatedDistance.setText(citiesPathDist.get(1).toString());
-                textArea.setText(citiesPathDist.get(0).toString());
+                //textArea.setText(citiesPathDist.get(0).toString());
+                textArea.showPath((ArrayList)citiesPathDist.get(0));
             }
 
 //            this.repaint();

@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 
 public class PathDisplay extends JTextArea {
@@ -7,6 +8,10 @@ public class PathDisplay extends JTextArea {
 
     public PathDisplay(String s) {
         super(s);
+        this.setEnabled(false);
+        this.setFont(new Font("Arial", Font.PLAIN, 20));
+        this.setSize(200, 20);
+        this.setLocation(400, 150);
     }
 
 

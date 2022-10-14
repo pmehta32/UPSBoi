@@ -32,11 +32,7 @@ public class GUI extends JFrame implements ActionListener{
         Container container = getContentPane();
         container.setLayout(null);
 
-        JLabel title = new JLabel("TSP");
-        title.setFont(new Font("Arial", Font.PLAIN, 40));
-        title.setSize(300, 30);
-        title.setLocation(300, 30);
-        container.add(title);
+        GUIComponents.setStaticComponents(container);
 
         chooseFileButton = new JButton("Choose File");
         chooseFileButton.setSize(150, 20);
@@ -50,46 +46,16 @@ public class GUI extends JFrame implements ActionListener{
         fileName.setLocation(400, 70);
         container.add(fileName);
 
-        JLabel totalDistance = new JLabel("Total Distance:");
-        totalDistance.setFont(new Font("Arial", Font.PLAIN, 20));
-        totalDistance.setSize(200, 20);
-        totalDistance.setLocation(100, 120);
-        container.add(totalDistance);
-
         calculatedDistance = new JLabel("Not yet calculated");
         calculatedDistance.setFont(new Font("Arial", Font.PLAIN, 20));
         calculatedDistance.setSize(200, 20);
         calculatedDistance.setLocation(400, 120);
         container.add(calculatedDistance);
 
-        JLabel route = new JLabel("Route:");
-        route.setFont(new Font("Arial", Font.PLAIN, 20));
-        route.setSize(200, 20);
-        route.setLocation(100, 150);
-        container.add(route);
-
         travellingPath = new PathDisplay ("Path yet not calculated");
-        travellingPath.setEnabled(false);
-        travellingPath.setFont(new Font("Arial", Font.PLAIN, 20));
-        travellingPath.setSize(200, 20);
-        travellingPath.setLocation(400, 150);
-        JScrollPane travellingPathScroll = new JScrollPane (travellingPath,
-                JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        travellingPathScroll.setLocation(400, 150);
-        travellingPathScroll.setSize(400, 200);
-        container.add(travellingPathScroll);
-
-        JLabel map = new JLabel("Map:");
-        map.setFont(new Font("Arial", Font.PLAIN, 20));
-        map.setSize(200, 20);
-        map.setLocation(100, 370);
-        container.add(map);
+        GUIComponents.setRouteScrollPane(container, travellingPath);
 
         mapPanel = new MapPlot();
-        mapPanel.setSize(350, 350);
-        mapPanel.setLocation(400, 370);
-        mapPanel.setBackground(Color.black);
-        mapPanel.setBorder(BorderFactory.createLineBorder(Color.black));
         container.add(mapPanel);
 
         this.setVisible(true);

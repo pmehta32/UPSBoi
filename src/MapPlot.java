@@ -9,6 +9,10 @@ public class MapPlot extends JPanel {
 
     public MapPlot() {
         super();
+        this.setSize(350, 350);
+        this.setLocation(400, 370);
+        this.setBackground(Color.black);
+        this.setBorder(BorderFactory.createLineBorder(Color.black));
     }
 
     public void setCoordinates(ArrayList coordinates) {

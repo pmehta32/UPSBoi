@@ -32,9 +32,7 @@ public class GUI extends JFrame implements ActionListener{
 
         GUIComponents.setStaticComponents(container);
 
-        chooseFileButton = new JButton("Choose File");
-        chooseFileButton.setSize(150, 20);
-        chooseFileButton.setLocation(100, 70);
+        chooseFileButton = GUIComponents.buttonFactory("chooseFileButton");
         chooseFileButton.addActionListener(this);
         container.add(chooseFileButton);
 
@@ -56,21 +54,29 @@ public class GUI extends JFrame implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == chooseFileButton) {
-            JFileChooser fileUploader = new JFileChooser();
-            fileUploader.setFileFilter(new TspFilter());
-            fileUploader.setVisible(true);
-            int selectedFile = fileUploader.showOpenDialog(null);
-            if(selectedFile == JFileChooser.APPROVE_OPTION) {
-                this.graph = null;
-                this.graph = FileReader.loadFile(fileUploader.getSelectedFile().getAbsolutePath());
-                this.draw2DMap();
-                fileName.setText(fileUploader.getSelectedFile().getName());
-                PathFinder pf = new PathFinder(this.graph);
-                ArrayList citiesPathDist =  pf.findPath();
-                calculatedDistance.setText(citiesPathDist.get(1).toString());
-                travellingPath.showPath((ArrayList)citiesPathDist.get(0));
-            }
+            handleNewFile();
         }
+    }
+
+    public void handleNewFile() {
+        JFileChooser fileUploader = new JFileChooser();
+        fileUploader.setFileFilter(new TspFilter());
+        fileUploader.setVisible(true);
+        int selectedFile = fileUploader.showOpenDialog(null);
+        if(selectedFile == JFileChooser.APPROVE_OPTION) {
+            fileName.setText(fileUploader.getSelectedFile().getName());
+            solveTSP(fileUploader.getSelectedFile().getAbsolutePath());
+        }
+    }
+
+    public void solveTSP(String filePath) {
+        this.graph = null;
+        this.graph = FileReader.loadFile(filePath);
+        this.draw2DMap();
+        PathFinder pf = new PathFinder(this.graph);
+        ArrayList citiesPathDist =  pf.findPath();
+        calculatedDistance.setText(citiesPathDist.get(1).toString());
+        travellingPath.showPath((ArrayList)citiesPathDist.get(0));
     }
 
     public void draw2DMap() {

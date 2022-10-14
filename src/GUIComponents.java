@@ -35,6 +35,16 @@ public class GUIComponents {
         return null;
     }
 
+    public static JButton buttonFactory(String s) {
+        if (s.equals("chooseFileButton")) {
+            JButton chooseFileButton = new JButton("Choose File");
+            chooseFileButton.setSize(150, 20);
+            chooseFileButton.setLocation(100, 70);
+            return chooseFileButton;
+        }
+        return null;
+    }
+
     private static void setTitle(Container container) {
         JLabel title = new JLabel("TSP");
         title.setFont(new Font("Arial", Font.PLAIN, 40));

@@ -23,7 +23,7 @@ public class FileReader {
      *
      * @param filepath string that shows the file uploaded by the user
      * @return displays the graph if the function can read the file, otherwise null
-     * @exception FileNotFoundException if file does not exist
+     * @exception Exception if file does not exist
      */
     public static Graph loadFile(String filepath) {
         Graph graph;
@@ -59,25 +59,27 @@ public class FileReader {
             line = line.trim().replaceAll(" +", " ");
             String arr[] = line.split(" ");
 
-            if(arr[0].startsWith("DIMENSION")) {
-                numCities = Integer.valueOf(arr[arr.length-1]);
+            if (arr[0].startsWith("DIMENSION")) {
+                numCities = Integer.valueOf(arr[arr.length - 1]);
             }
-            if(!arr[0].matches("[A-Z].*")) {
-                for(String s: arr) {
-                    if(s.length()>0) {
+            if (!arr[0].matches("[A-Z].*")) {
+                for (String s : arr) {
+                    if (s.length() > 0) {
                         Float num = Float.valueOf(s);
                         row.add(num);
-                        if(row.size() == numCities) {
+                        if (row.size() == numCities) {
                             edges.add(row);
                             row = new ArrayList();
                         }
                     }
                 }
             }
-            Graph graph = new Graph(edges.size());
-            graph.setEdges(edges);
-            return graph;
+        }
+        Graph graph = new Graph(edges.size());
+        graph.setEdges(edges);
+        return graph;
     }
+
     /**
      * parses the symmetric file upladed by the user which has a Graph type
      * uses once to check the symmetric file for parsing it in the loadFile method

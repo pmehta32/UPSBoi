@@ -9,9 +9,6 @@ public class SymGraph extends Graph {
     private ArrayList<ArrayList> coordinates;
     private boolean memorySaver = false;
 
-    private ArrayList<ArrayList> coordinates;
-    private boolean memorySaver = false;
-
     public SymGraph(int numVertices, ArrayList<ArrayList> coordinates) {
         super(numVertices);
         this.coordinates = coordinates;

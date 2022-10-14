@@ -1,68 +1,125 @@
-import javax.swing.*;
-import javax.swing.BorderFactory;
-import javax.swing.ButtonGroup;
-import javax.swing.ButtonModel;
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JFileChooser;
-import javax.swing.SwingConstants;
-import java.awt.BorderLayout;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.awt.*;
-import javax.swing.border.Border;
+import java.util.ArrayList;
 
+/**
+ * public class GUI inherits from a class called JFrame and uses the ActionListener interface
+ * GUI provides the interface for users to uplaod files and check various details
+ * constructor GUI uses to call the method in the class
+ */
 public class GUI extends JFrame implements ActionListener{
 
-    JButton button;
+    private JButton chooseFileButton;
+    private JLabel fileName;
+    private JLabel calculatedDistance;
+    private PathDisplay travellingPath;
+    private MapPlot mapPanel;
     private Graph graph;
 
-    public GUI() {
 
-        JPanel panel = new JPanel();
-        button = new JButton("Choose File");
-        button.addActionListener(this);
-
-        panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 5, 10));
-        this.setLayout(new GridLayout(0, 1));
-        this.add(button);
-
-        this.add(panel, BorderLayout.CENTER);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setTitle("Travelling Salesman");
-        this.pack();
-        this.setVisible(true);
-
+    public GUI(){
+        loadGUI();
     }
+    /**
+     * loadGUI method handles the entire GUI
+     * handles the default display and the display after input file
+     * when there is no file selected, loadGUI displays the default message
+     * handles the display of the file name with an extension of tsp and atsp
+     * handles the display of the route as a textbox
+     * handles the calculated distance as a textbox
+     * handles the display the graph for the symmetric points
+     * manages all the above functions by creating their attributes
+     */
+    public void loadGUI() {
+        setTitle("Travelling Salesman Problem");
+        setBounds(300, 90, 900, 800   );
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setResizable(true);
+
+        Container container = getContentPane();
+        container.setLayout(null);
+
+        GUIComponents.setStaticComponents(container);
+
+        chooseFileButton = GUIComponents.buttonFactory("chooseFileButton");
+        chooseFileButton.addActionListener(this);
+        container.add(chooseFileButton);
+
+        fileName = GUIComponents.labelFactory("fileName");
+        container.add(fileName);
+
+        calculatedDistance = GUIComponents.labelFactory("calculatedDistance");
+        container.add(calculatedDistance);
+
+        travellingPath = new PathDisplay ("Path yet not calculated");
+        GUIComponents.setRouteScrollPane(container, travellingPath);
+
+        mapPanel = new MapPlot();
+        container.add(mapPanel);
+
+        this.setVisible(true);
+    }
+
+    /**
+     * actionPerformed method overrides the original method from the ActionListener interface
+     * works as a triggering method.
+     * calls the handleNewFile method to trigger actions
+     *
+     * @param e takes the action from the user as an ActionEvent type object
+     *          and performs the actions defined in the method
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
-        
-        if(e.getSource() == button) {
-
-            JFileChooser fileUploader = new JFileChooser();
-            fileUploader.setVisible(true);
-            int selectedFile = fileUploader.showOpenDialog(null);
-
-            if(selectedFile == JFileChooser.APPROVE_OPTION) {
-                //File file = new File(fileUploader.getSelectedFile().getAbsolutePath());
-                // System.out.println(file);
-                this.graph = FileReader.loadFile(fileUploader.getSelectedFile().getAbsolutePath());
-                //System.out.println(this.graph.getEdges());
-                PathFinder pf = new PathFinder(this.graph);
-                pf.findPath();
-            }
+        if(e.getSource() == chooseFileButton) {
+            handleNewFile();
         }
     }
 
-    public static void main(String[] args) {
-
-        new GUI();
-        
+    /**
+     * as the user performs the action, handleNewFile method triggers the in-built functions of the ActionListener
+     * sets the tsp approved file for parsing
+     * calls solveTSP method to display the tsp file
+     */
+    public void handleNewFile() {
+        JFileChooser fileUploader = new JFileChooser();
+        fileUploader.setFileFilter(new TspFilter());
+        fileUploader.setVisible(true);
+        int selectedFile = fileUploader.showOpenDialog(null);
+        if(selectedFile == JFileChooser.APPROVE_OPTION) {
+            fileName.setText(fileUploader.getSelectedFile().getName());
+            solveTSP(fileUploader.getSelectedFile().getAbsolutePath());
+        }
     }
+
+    /**
+     * solves the issue of displaying the tsp file in graph
+     * displays the calculated distance in the txtbox
+     * calls draw2DMap method to trigger it
+     *
+     * @param filePath takes the uploaded file to load it
+     */
+    public void solveTSP(String filePath) {
+        this.graph = null;
+        this.graph = FileReader.loadFile(filePath);
+        this.draw2DMap();
+        PathFinder pf = new PathFinder(this.graph);
+        ArrayList citiesPathDist =  pf.findPath();
+        calculatedDistance.setText(citiesPathDist.get(1).toString());
+        travellingPath.showPath((ArrayList)citiesPathDist.get(0));
+    }
+
+    /**
+     * sets the coordinates on the map using the in-built JPanel methods
+     * gets triggered in solveTSP method and uses the functions to load the file in UI
+     */
+    public void draw2DMap() {
+        mapPanel.setCoordinates((ArrayList) graph.getCoordinates());
+        mapPanel.repaint();
+    }
+
 }

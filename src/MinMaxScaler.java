@@ -11,11 +11,6 @@ public class MinMaxScaler {
         xMax = (float)coordinates.get(0).get(0);
         yMin = (float)coordinates.get(0).get(1);
         yMax = (float)coordinates.get(0).get(1);
-        //System.out.println("xMax: " + xMax);
-        //System.out.println("xMin: " + xMin);
-        //System.out.println("yMax: " + yMax);
-        //System.out.println("yMin: " + yMin);
-        //System.out.println("********************");
         setScaler(coordinates);
     }
 
@@ -35,10 +30,6 @@ public class MinMaxScaler {
                 yMax = (float)point.get(1);
             }
         }
-        //System.out.println("xMax: " + xMax);
-        //System.out.println("xMin: " + xMin);
-        //System.out.println("yMax: " + yMax);
-        //System.out.println("yMin: " + yMin);
     }
 
     public ArrayList scaleValue(ArrayList point) {

@@ -18,6 +18,23 @@ public class GUIComponents {
         container.add(travellingPathScroll);
     }
 
+    public static JLabel labelFactory(String s) {
+        if (s.equals("fileName")) {
+            JLabel fileName = new JLabel("No file selected");
+            fileName.setFont(new Font("Arial", Font.PLAIN, 20));
+            fileName.setSize(200, 20);
+            fileName.setLocation(400, 70);
+            return fileName;
+        } else if (s.equals("calculatedDistance")) {
+            JLabel calculatedDistance = new JLabel("Not yet calculated");
+            calculatedDistance.setFont(new Font("Arial", Font.PLAIN, 20));
+            calculatedDistance.setSize(200, 20);
+            calculatedDistance.setLocation(400, 120);
+            return calculatedDistance;
+        }
+        return null;
+    }
+
     private static void setTitle(Container container) {
         JLabel title = new JLabel("TSP");
         title.setFont(new Font("Arial", Font.PLAIN, 40));

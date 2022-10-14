@@ -1,5 +1,3 @@
-import javax.swing.*;
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -11,11 +9,11 @@ import java.util.ArrayList;
 
 public class GUI extends JFrame implements ActionListener{
 
-    JButton chooseFileButton;
-    JLabel fileName;
-    JLabel calculatedDistance;
-    PathDisplay travellingPath;
-    MapPlot mapPanel;
+    private JButton chooseFileButton;
+    private JLabel fileName;
+    private JLabel calculatedDistance;
+    private PathDisplay travellingPath;
+    private MapPlot mapPanel;
     private Graph graph;
 
 
@@ -40,16 +38,10 @@ public class GUI extends JFrame implements ActionListener{
         chooseFileButton.addActionListener(this);
         container.add(chooseFileButton);
 
-        fileName = new JLabel("No file selected");
-        fileName.setFont(new Font("Arial", Font.PLAIN, 20));
-        fileName.setSize(200, 20);
-        fileName.setLocation(400, 70);
+        fileName = GUIComponents.labelFactory("fileName");
         container.add(fileName);
 
-        calculatedDistance = new JLabel("Not yet calculated");
-        calculatedDistance.setFont(new Font("Arial", Font.PLAIN, 20));
-        calculatedDistance.setSize(200, 20);
-        calculatedDistance.setLocation(400, 120);
+        calculatedDistance = GUIComponents.labelFactory("calculatedDistance");
         container.add(calculatedDistance);
 
         travellingPath = new PathDisplay ("Path yet not calculated");

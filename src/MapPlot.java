@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class MapPlot extends JPanel {
 
     private ArrayList coordinates = new ArrayList();
-    MinMaxScaler scaler;
+    private MinMaxScaler scaler;
 
     public MapPlot() {
         super();

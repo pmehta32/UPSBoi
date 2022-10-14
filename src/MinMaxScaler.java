@@ -1,10 +1,10 @@
 import java.util.ArrayList;
 
 public class MinMaxScaler {
-    float xMin;
-    float xMax;
-    float yMin;
-    float yMax;
+    private float xMin;
+    private float xMax;
+    private float yMin;
+    private float yMax;
 
     public MinMaxScaler(ArrayList<ArrayList> coordinates) {
         xMin = (float)coordinates.get(0).get(0);

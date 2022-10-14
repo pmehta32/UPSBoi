@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class Graph {
     private ArrayList<ArrayList<Float>> edges;
-    private int numVertices;
+    protected int numVertices;
 
     public Graph(int numVertices) {
         this.numVertices = numVertices;

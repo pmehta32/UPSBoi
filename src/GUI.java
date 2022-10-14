@@ -184,27 +184,30 @@ public class GUI extends JFrame implements ActionListener{
             JFileChooser fileUploader = new JFileChooser();
             fileUploader.setVisible(true);
             int selectedFile = fileUploader.showOpenDialog(null);
-
             if(selectedFile == JFileChooser.APPROVE_OPTION) {
                 this.graph = null;
                 this.graph = FileReader.loadFile(fileUploader.getSelectedFile().getAbsolutePath());
+                this.draw2DMap();
                 //System.out.println(this.graph.getEdges());
-                String filepath = fileUploader.getSelectedFile().getName();
-                fileName.setText(filepath);
+                //String filepath = ;
+                fileName.setText(fileUploader.getSelectedFile().getName());
                 PathFinder pf = new PathFinder(this.graph);
                 ArrayList citiesPathDist =  pf.findPath();
                 calculatedDistance.setText(citiesPathDist.get(1).toString());
                 //travellingPath.setText(citiesPathDist.get(0).toString());
                 travellingPath.showPath((ArrayList)citiesPathDist.get(0));
-                if(graph.isSymmetric()) {
-                    // System.out.println(graph.getCoordinates());
-                    mapPanel.setCoordinates((ArrayList) graph.getCoordinates());
-                    mapPanel.repaint();
-                }
+
             }
 
 //            this.repaint();
 //            loadGUI();
+        }
+    }
+
+    public void draw2DMap() {
+        if(graph.isSymmetric()) {
+            mapPanel.setCoordinates((ArrayList) graph.getCoordinates());
+            mapPanel.repaint();
         }
     }
 

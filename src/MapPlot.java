@@ -15,6 +15,7 @@ public class MapPlot extends JPanel {
 
     public void setCoordinates(ArrayList coordinates) {
         this.coordinates = coordinates;
+        if(coordinates!=null)
         scaler = new MinMaxScaler(coordinates);
     }
 
@@ -38,25 +39,25 @@ public class MapPlot extends JPanel {
         Graphics2D g2 = (Graphics2D) g;
 
         g2.setPaint(Color.red);
-        int w = getWidth();
-        int h = getHeight();
+        //int w = getWidth();
+        //int h = getHeight();
 
         //System.out.println(w);
         //System.out.println(h);
 
         //Random r = new Random();
 
-        if(coordinates.size()==0) {
-            g2.drawOval(0, 0, 5, 5);
-            g2.drawOval(340, 0, 5, 5);
-            g2.drawOval(340, 340, 5, 5);
-        } else {
+        //if(coordinates.size()==0) {
+        //    g2.drawOval(0, 0, 5, 5);
+        //    g2.drawOval(340, 0, 5, 5);
+        //    g2.drawOval(340, 340, 5, 5);
+        //} else {
+        if(coordinates!=null)
             for(int i=0; i<coordinates.size(); i++) {
                 ArrayList newPoint = transformPoint((ArrayList)coordinates.get(i)); //(ArrayList) coordinates.get(i);
                 //System.out.println(newPoint);
                 g2.drawOval(Math.round((float)newPoint.get(0)), Math.round((float)newPoint.get(1)), 5, 5);
             }
-        }
         //g2.drawOval(0, 540, 2, 2);
 
 

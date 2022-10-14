@@ -8,7 +8,7 @@ public class SymGraph extends Graph {
     public SymGraph(int numVertices, ArrayList<ArrayList> coordinates) {
         super(numVertices);
         this.coordinates = coordinates;
-        if(numVertices<11000) {
+        if(numVertices<1000) {
             this.convertCoordsToEdges();
         } else {
             this.memorySaver = true;

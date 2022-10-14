@@ -99,6 +99,7 @@ public class GUI extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == chooseFileButton) {
             JFileChooser fileUploader = new JFileChooser();
+            fileUploader.setFileFilter(new TspFilter());
             fileUploader.setVisible(true);
             int selectedFile = fileUploader.showOpenDialog(null);
             if(selectedFile == JFileChooser.APPROVE_OPTION) {
@@ -115,10 +116,8 @@ public class GUI extends JFrame implements ActionListener{
     }
 
     public void draw2DMap() {
-        if(graph.isSymmetric()) {
             mapPanel.setCoordinates((ArrayList) graph.getCoordinates());
             mapPanel.repaint();
-        }
     }
 
 }

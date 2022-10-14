@@ -1,7 +1,3 @@
-
-
-import javax.swing.*;
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -18,18 +14,17 @@ import java.util.ArrayList;
  */
 public class GUI extends JFrame implements ActionListener{
 
-    JButton chooseFileButton;
-    JLabel fileName;
-    JLabel calculatedDistance;
-    PathDisplay travellingPath;
-    MapPlot mapPanel;
+    private JButton chooseFileButton;
+    private JLabel fileName;
+    private JLabel calculatedDistance;
+    private PathDisplay travellingPath;
+    private MapPlot mapPanel;
     private Graph graph;
 
 
     public GUI(){
         loadGUI();
     }
-
     /**
      * loadGUI method handles the entire GUI
      * handles the default display and the display after input file
@@ -49,64 +44,22 @@ public class GUI extends JFrame implements ActionListener{
         Container container = getContentPane();
         container.setLayout(null);
 
-        JLabel title = new JLabel("TSP");
-        title.setFont(new Font("Arial", Font.PLAIN, 40));
-        title.setSize(300, 30);
-        title.setLocation(300, 30);
-        container.add(title);
+        GUIComponents.setStaticComponents(container);
 
-        chooseFileButton = new JButton("Choose File");
-        chooseFileButton.setSize(150, 20);
-        chooseFileButton.setLocation(100, 70);
+        chooseFileButton = GUIComponents.buttonFactory("chooseFileButton");
         chooseFileButton.addActionListener(this);
         container.add(chooseFileButton);
 
-        fileName = new JLabel("No file selected");
-        fileName.setFont(new Font("Arial", Font.PLAIN, 20));
-        fileName.setSize(200, 20);
-        fileName.setLocation(400, 70);
+        fileName = GUIComponents.labelFactory("fileName");
         container.add(fileName);
 
-        JLabel totalDistance = new JLabel("Total Distance:");
-        totalDistance.setFont(new Font("Arial", Font.PLAIN, 20));
-        totalDistance.setSize(200, 20);
-        totalDistance.setLocation(100, 120);
-        container.add(totalDistance);
-
-        calculatedDistance = new JLabel("Not yet calculated");
-        calculatedDistance.setFont(new Font("Arial", Font.PLAIN, 20));
-        calculatedDistance.setSize(200, 20);
-        calculatedDistance.setLocation(400, 120);
+        calculatedDistance = GUIComponents.labelFactory("calculatedDistance");
         container.add(calculatedDistance);
 
-        JLabel route = new JLabel("Route:");
-        route.setFont(new Font("Arial", Font.PLAIN, 20));
-        route.setSize(200, 20);
-        route.setLocation(100, 150);
-        container.add(route);
-
         travellingPath = new PathDisplay ("Path yet not calculated");
-        travellingPath.setEnabled(false);
-        travellingPath.setFont(new Font("Arial", Font.PLAIN, 20));
-        travellingPath.setSize(200, 20);
-        travellingPath.setLocation(400, 150);
-        JScrollPane travellingPathScroll = new JScrollPane (travellingPath,
-                JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        travellingPathScroll.setLocation(400, 150);
-        travellingPathScroll.setSize(400, 200);
-        container.add(travellingPathScroll);
-
-        JLabel map = new JLabel("Map:");
-        map.setFont(new Font("Arial", Font.PLAIN, 20));
-        map.setSize(200, 20);
-        map.setLocation(100, 370);
-        container.add(map);
+        GUIComponents.setRouteScrollPane(container, travellingPath);
 
         mapPanel = new MapPlot();
-        mapPanel.setSize(350, 350);
-        mapPanel.setLocation(400, 370);
-        mapPanel.setBackground(Color.black);
-        mapPanel.setBorder(BorderFactory.createLineBorder(Color.black));
         container.add(mapPanel);
 
         this.setVisible(true);
@@ -123,37 +76,34 @@ public class GUI extends JFrame implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == chooseFileButton) {
-            JFileChooser fileUploader = new JFileChooser();
-            fileUploader.setVisible(true);
-            int selectedFile = fileUploader.showOpenDialog(null);
-
-            if(selectedFile == JFileChooser.APPROVE_OPTION) {
-                this.graph = null;
-                this.graph = FileReader.loadFile(fileUploader.getSelectedFile().getAbsolutePath());
-
-                String filepath = fileUploader.getSelectedFile().getName();
-                fileName.setText(filepath);
-
-                PathFinder pf = new PathFinder(this.graph);
-                ArrayList citiesPathDist =  pf.findPath();
-                calculatedDistance.setText(citiesPathDist.get(1).toString());
-
-                travellingPath.showPath((ArrayList)citiesPathDist.get(0));
-
-                if(graph.isSymmetric()) {
-                    mapPanel.setCoordinates((ArrayList) graph.getCoordinates());
-                    mapPanel.repaint();
-                }
-            }
+            handleNewFile();
         }
     }
 
-    /**
-     * main method is made to create a new object of GUI constructor to call the loadGUI method to perform actions
-     * 
-     * @param args takes the GUI constructor object 
-     */
-    public static void main(String[] args) {
-        new GUI();
+    public void handleNewFile() {
+        JFileChooser fileUploader = new JFileChooser();
+        fileUploader.setFileFilter(new TspFilter());
+        fileUploader.setVisible(true);
+        int selectedFile = fileUploader.showOpenDialog(null);
+        if(selectedFile == JFileChooser.APPROVE_OPTION) {
+            fileName.setText(fileUploader.getSelectedFile().getName());
+            solveTSP(fileUploader.getSelectedFile().getAbsolutePath());
+        }
     }
+
+    public void solveTSP(String filePath) {
+        this.graph = null;
+        this.graph = FileReader.loadFile(filePath);
+        this.draw2DMap();
+        PathFinder pf = new PathFinder(this.graph);
+        ArrayList citiesPathDist =  pf.findPath();
+        calculatedDistance.setText(citiesPathDist.get(1).toString());
+        travellingPath.showPath((ArrayList)citiesPathDist.get(0));
+    }
+
+    public void draw2DMap() {
+            mapPanel.setCoordinates((ArrayList) graph.getCoordinates());
+            mapPanel.repaint();
+    }
+
 }

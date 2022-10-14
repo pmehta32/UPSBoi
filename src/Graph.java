@@ -32,6 +32,7 @@ public class Graph {
     public float getDistance(int source, int destination) {
         return edges.get(source).get(destination);
     }
+
     /**
      * gets the edges of the given co-ordinates of the loaction points as an ArrayList type
      *
@@ -40,6 +41,7 @@ public class Graph {
     public ArrayList getEdges() {
         return this.edges;
     }
+
     /**
      * gets the number of vertices of the given co-ordinates of the loaction points as int type
      *
@@ -48,6 +50,7 @@ public class Graph {
     public int getNumVertices() {
         return this.numVertices;
     }
+
     /**
      * checks if the uploaded file is symmetric to display the graph in future
      *
@@ -56,6 +59,7 @@ public class Graph {
     public boolean isSymmetric() {
         return false;
     }
+
     /**
      * creates an object to get the co-ordinates of the file 
      *

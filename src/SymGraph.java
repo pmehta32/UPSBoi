@@ -9,6 +9,8 @@ public class SymGraph extends Graph {
     private ArrayList<ArrayList> coordinates;
     private boolean memorySaver = false;
 
+    private ArrayList<ArrayList> coordinates;
+    private boolean memorySaver = false;
 
     public SymGraph(int numVertices, ArrayList<ArrayList> coordinates) {
         super(numVertices);
@@ -49,6 +51,7 @@ public class SymGraph extends Graph {
     public ArrayList getCoordinates() {
         return this.coordinates;
     }
+    
     /**
      * isSymmetric method is a Boolean type methos which checks if the graph is displayed for only symmetric file
      * overrides the original isSymmetric method

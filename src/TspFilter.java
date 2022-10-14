@@ -6,6 +6,7 @@ import java.io.File;
  * checks for the file extension and filters them
  */
 public class TspFilter extends FileFilter {
+
     /**
      * accept is a checking method of boolean type whichi basically checks if the extension of the uploaded file
      * is tsp or atsp or not
@@ -31,4 +32,3 @@ public class TspFilter extends FileFilter {
         return null;
     }
 }
-

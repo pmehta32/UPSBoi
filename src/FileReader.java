@@ -74,10 +74,9 @@ public class FileReader {
                     }
                 }
             }
-        }
-        Graph graph = new Graph(edges.size());
-        graph.setEdges(edges);
-        return graph;
+            Graph graph = new Graph(edges.size());
+            graph.setEdges(edges);
+            return graph;
     }
     /**
      * parses the symmetric file upladed by the user which has a Graph type

@@ -51,6 +51,7 @@ public class PathFinder {
         }
         return index;
     }
+    
     /**
      * findPath method finds the most optimal solution
      * also calculates the distance from the source to destination by calling getDistance method
@@ -74,7 +75,7 @@ public class PathFinder {
             visited.add(next);
             curr = next;
             if(path.size() % 1000 == 0)
-                System.out.println("Running: " + path.size() + " / " + this.graph.getNumVertices());
+            System.out.println("Running: " + path.size() + " / " + this.graph.getNumVertices());
         }
 
         path.add(start);

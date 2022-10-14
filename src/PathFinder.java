@@ -50,6 +50,8 @@ public class PathFinder {
             path.add(next);
             visited.add(next);
             curr = next;
+            if(path.size() % 1000 == 0)
+            System.out.println("Running: " + path.size() + " / " + this.graph.getNumVertices());
         }
 
         path.add(start);

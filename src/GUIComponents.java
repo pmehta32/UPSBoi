@@ -1,6 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
-
+/**
+* static class used as a helper class by GUI class to create the GUI components
+*/
 public class GUIComponents {
 
     /**

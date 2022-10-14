@@ -3,6 +3,10 @@ import java.awt.*;
 
 public class GUIComponents {
 
+    /**
+     * This method creates all the static UI components of the application
+     * @param container content pane of the JFrame calling this method
+     */
     public static void setStaticComponents(Container container) {
         setTitle(container);
         setDistanceLabel(container);
@@ -10,6 +14,11 @@ public class GUIComponents {
         setMapLabel(container);
     }
 
+    /**
+     * Creates the scroll pane for displaying the path
+     * @param container content pane of the JFrame calling this method
+     * @param travellingPath PathDisplay to be put inside the scroll pane
+     */
     public static void setRouteScrollPane(Container container, PathDisplay travellingPath) {
         JScrollPane travellingPathScroll = new JScrollPane (travellingPath,
                 JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -18,6 +27,10 @@ public class GUIComponents {
         container.add(travellingPathScroll);
     }
 
+    /**
+     * Creates a JLabel for the GUI based on the option provided
+     * @param s string that denotes the label that needs to be created
+     */
     public static JLabel labelFactory(String s) {
         if (s.equals("fileName")) {
             JLabel fileName = new JLabel("No file selected");
@@ -35,6 +48,10 @@ public class GUIComponents {
         return null;
     }
 
+    /**
+     * Creates a JButton for the GUI based on the option provided
+     * @param s string that denotes the button that needs to be created
+     */
     public static JButton buttonFactory(String s) {
         if (s.equals("chooseFileButton")) {
             JButton chooseFileButton = new JButton("Choose File");
@@ -45,6 +62,10 @@ public class GUIComponents {
         return null;
     }
 
+    /**
+     * Creates a static JLabel for the user interface
+     * @param container content pane of the JFrame calling this method
+     */
     private static void setTitle(Container container) {
         JLabel title = new JLabel("TSP");
         title.setFont(new Font("Arial", Font.PLAIN, 40));
@@ -53,6 +74,10 @@ public class GUIComponents {
         container.add(title);
     }
 
+    /**
+     * Creates a static JLabel for the user interface
+     * @param container content pane of the JFrame calling this method
+     */
     private static void setDistanceLabel(Container container) {
         JLabel totalDistance = new JLabel("Total Distance:");
         totalDistance.setFont(new Font("Arial", Font.PLAIN, 20));
@@ -61,6 +86,10 @@ public class GUIComponents {
         container.add(totalDistance);
     }
 
+    /**
+     * Creates a static JLabel for the user interface
+     * @param container content pane of the JFrame calling this method
+     */
     private static void setRouteLabel(Container container) {
         JLabel route = new JLabel("Route:");
         route.setFont(new Font("Arial", Font.PLAIN, 20));
@@ -69,6 +98,10 @@ public class GUIComponents {
         container.add(route);
     }
 
+    /**
+     * Creates a static JLabel for the user interface
+     * @param container content pane of the JFrame calling this method
+     */
     private static void setMapLabel(Container container) {
         JLabel map = new JLabel("Map:");
         map.setFont(new Font("Arial", Font.PLAIN, 20));

@@ -68,7 +68,7 @@ public class GUI extends JFrame implements ActionListener{
     /**
      * actionPerformed method overrides the original method from the ActionListener interface
      * works as a triggering method.
-     * as the user performs the action, actionPerformed method triggers the in-built functions of the ActionListener
+     * calls the handleNewFile method to trigger actions
      *
      * @param e takes the action from the user as an ActionEvent type object
      *          and performs the actions defined in the method
@@ -80,6 +80,11 @@ public class GUI extends JFrame implements ActionListener{
         }
     }
 
+    /**
+     * as the user performs the action, handleNewFile method triggers the in-built functions of the ActionListener
+     * sets the tsp approved file for parsing
+     * calls solveTSP method to display the tsp file
+     */
     public void handleNewFile() {
         JFileChooser fileUploader = new JFileChooser();
         fileUploader.setFileFilter(new TspFilter());
@@ -91,6 +96,13 @@ public class GUI extends JFrame implements ActionListener{
         }
     }
 
+    /**
+     * solves the issue of displaying the tsp file in graph
+     * displays the calculated distance in the txtbox
+     * calls draw2DMap method to trigger it
+     *
+     * @param filePath takes the uploaded file to load it
+     */
     public void solveTSP(String filePath) {
         this.graph = null;
         this.graph = FileReader.loadFile(filePath);
@@ -101,9 +113,13 @@ public class GUI extends JFrame implements ActionListener{
         travellingPath.showPath((ArrayList)citiesPathDist.get(0));
     }
 
+    /**
+     * sets the coordinates on the map using the in-built JPanel methods
+     * gets triggered in solveTSP method and uses the functions to load the file in UI
+     */
     public void draw2DMap() {
-            mapPanel.setCoordinates((ArrayList) graph.getCoordinates());
-            mapPanel.repaint();
+        mapPanel.setCoordinates((ArrayList) graph.getCoordinates());
+        mapPanel.repaint();
     }
 
 }
